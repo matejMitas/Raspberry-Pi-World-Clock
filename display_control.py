@@ -15,16 +15,16 @@ for pin in pins:
 	G.setup(pin, G.OUT)	
 
 #Define states of pins
-zero = 	[1,1,1,1,1,1,0]
+zero = 		[1,1,1,1,1,1,0]
 one = 		[0,1,1,0,0,0,0]
 two = 		[1,1,0,1,1,0,1]
 three = 	[1,1,1,1,0,0,1] 
-four = 	[0,1,1,0,0,1,1]
-five = 	[1,0,1,1,0,1,1]
+four = 		[0,1,1,0,0,1,1]
+five = 		[1,0,1,1,0,1,1]
 six = 		[1,0,1,1,1,1,1]
 seven = 	[1,1,1,0,0,0,0]
-eight = 	[1,1,1,1,1,1,1]
-nine = 	[1,1,1,1,0,1,1]
+eight = 		[1,1,1,1,1,1,1]
+nine = 		[1,1,1,1,0,1,1]
 
 #main function
 def seven_segment(number, polarity = "anode"):
