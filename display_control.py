@@ -26,7 +26,7 @@ seven = 	[1,1,1,0,0,0,0]
 eight = 		[1,1,1,1,1,1,1]
 nine = 		[1,1,1,1,0,1,1]
 
-#Define states of pins
+#Match values with numbers
 values = {
 		0 : zero,
 		1 : one,
