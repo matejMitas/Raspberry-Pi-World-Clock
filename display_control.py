@@ -26,10 +26,8 @@ seven = 	[1,1,1,0,0,0,0]
 eight = 		[1,1,1,1,1,1,1]
 nine = 		[1,1,1,1,0,1,1]
 
-#main function
-def seven_segment(number, polarity = "anode"):
-	
-	values = {
+#Define states of pins
+values = {
 		0 : zero,
 		1 : one,
 		2 : two,
@@ -41,6 +39,9 @@ def seven_segment(number, polarity = "anode"):
 		8 : eight,
 		9 : nine
 	}
+
+#main function
+def seven_segment(number, polarity = "anode"):
 	
 	for pin, level in zip(pins, values[number]):
 		G.output(pin, not level)
