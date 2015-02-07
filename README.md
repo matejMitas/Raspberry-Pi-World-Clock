@@ -4,3 +4,7 @@ Raspberry Pi World Clock project brings you ability to connect your four digit d
 
 #v0.1
 add control for display
+
+#v0.2
+partial support of "muxing technique" to lower number of need pins
+inital test of buttons
