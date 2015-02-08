@@ -4,7 +4,7 @@ from __future__ import division
 
 #Import library
 import RPi.GPIO as G
-from time import sleep
+from time import sleep, time
 
 #BCM - numbers of Gs
 G.setmode(G.BCM)
@@ -28,16 +28,27 @@ for mux_pin in mux_pins:
 	G.setup(mux_pin, G.OUT)		
 
 #Define states of pins
+# zero = 		[1,1,1,1,1,1,0]
+# one = 		[0,1,1,0,0,0,0]
+# two = 		[1,1,0,1,1,0,1]
+# three = 	[1,1,1,1,0,0,1] 
+# four = 		[0,1,1,0,0,1,1]
+# five = 		[1,0,1,1,0,1,1]
+# six = 		[1,0,1,1,1,1,1]
+# seven = 	[1,1,1,0,0,0,0]
+# eight = 	[1,1,1,1,1,1,1]
+# nine = 		[1,1,1,1,0,1,1]
+
 zero = 		[1,1,1,1,1,1,0]
-one = 		[0,1,1,0,0,0,0]
+one = 		[0,0,0,0,1,1,0]
 two = 		[1,1,0,1,1,0,1]
-three = 	[1,1,1,1,0,0,1] 
-four = 		[0,1,1,0,0,1,1]
+three = 	[1,0,0,1,1,1,1] 
+four = 		[0,0,1,0,1,1,1]
 five = 		[1,0,1,1,0,1,1]
-six = 		[1,0,1,1,1,1,1]
-seven = 	[1,1,1,0,0,0,0]
+six = 		[1,1,1,1,0,1,1]
+seven = 	[0,0,0,1,1,1,0]
 eight = 	[1,1,1,1,1,1,1]
-nine = 		[1,1,1,1,0,1,1]
+nine = 		[1,0,1,1,1,1,1]
 
 empty_char =[0,0,0,0,0,0,0]
 minus =		[0,0,0,0,0,0,1]
@@ -87,16 +98,11 @@ values = {
 def show_four_chars(inp, polarity = "anode"):
 
 	#parse input
-	inp = str(inp)
-	chars = []
+	chars = list(str(inp))
 	
-	for char in inp:
-		chars.append(char)
-
 	if len(chars) < 4:	
 		diff = 4 - len(chars)
 		chars[:0] = " " * diff
-
 
 	#show char	
 	def show_digit(digit):
@@ -110,50 +116,34 @@ def show_four_chars(inp, polarity = "anode"):
 
 	#multiplexing part
 	try:
+
+		current_time_of_the_time_when_the_loop_was_created = int(time() * 1000)
+
 		while True:
+		
+			if (current_time_of_the_time_when_the_loop_was_created + 1) < int(time() * 1000):
+				break
+			else:
+				print current_time_of_the_time_when_the_loop_was_created	
+
+			G11 = [True, False, False, False]
+			G9  = [False, True, False, False]
+			G23 = [False, False, False, True]
+			G24 = [False, False, True, False]
 			
-			G.output(11, True)
-			G.output(9, False)
-			G.output(23, False)
-			G.output(24, False)
-
-			show_digit(chars[0])
-
-			sleep(1/refresh_rate)
-
-			G.output(11, False)
-			G.output(9, True)
-			G.output(23, False)
-			G.output(24, False)
-
-			show_digit(chars[1])
-
-			sleep(1/refresh_rate)
-
-			G.output(11, False)
-			G.output(9, False)
-			G.output(23, False)
-			G.output(24, True)
-
-			show_digit(chars[2])
-
-			sleep(1/refresh_rate)
-
-			G.output(11, False)
-			G.output(9, False)
-			G.output(23, True)
-			G.output(24, False)
-
-			show_digit(chars[3])
-
-			sleep(1/refresh_rate)
+			for i in range(4):
+				G.output(11, G11[i])
+				G.output(23,  G23[i])
+				G.output(9, G9[i])
+				G.output(24, G24[i])
+	
+				show_digit(chars[i])
+				sleep(1/refresh_rate)
 
 	except KeyboardInterrupt:
 		print("Konec!")
 		G.cleanup()		
 
 
-show_four_chars(raw_input("Jaké číslo chce zobrazit?\n")) #-999 to 9999
-
-
-	
+for i in range(1000):
+	show_four_chars(i)
