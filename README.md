@@ -8,3 +8,7 @@ add control for display
 #v0.2
 partial support of "muxing technique" to lower number of need pins
 inital test of buttons
+
+#v0.3
+utilizing OOP techniques
+added support for SIPO (Serial in/Parallel out) registers
