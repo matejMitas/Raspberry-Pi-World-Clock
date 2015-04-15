@@ -57,7 +57,7 @@ class Sipo_reg(object):
         # Dealing with possible errors within passing of list pins
 
         if len(num_list) > self.byte_count * 8:
-            raise Exception("Expression is would take up more space than available, length of expression = {}, available bites =  {}".format(len(num_list), self.byte_count * 8))
+            raise Exception("Expression would take up more space than available, length of expression = {}, available bites =  {}".format(len(num_list), self.byte_count * 8))
 
         # Reverse non-latched output
 
